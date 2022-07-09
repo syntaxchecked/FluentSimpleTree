@@ -1,0 +1,49 @@
+name: Build Solution
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Manual trigger'
+        required: true
+        default: 'Manual trigger'
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.417
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+  publish:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Verify commit exists in origin/main
+      run: |
+        git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+        git branch --remote --contains | grep origin/main
+    - name: Build
+      run: dotnet build -c Release
+    - name: Pack
+      run: dotnet pack -c Release -o . --no-build
+    - name: Deploy
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: D:\a\FluentSimpleTree\FluentSimpleTree\*nupkg
+    # - name: Push
+    #  run: dotnet nuget push SyntaxChecked.TestPackage.1.0.7.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_KEY }}
