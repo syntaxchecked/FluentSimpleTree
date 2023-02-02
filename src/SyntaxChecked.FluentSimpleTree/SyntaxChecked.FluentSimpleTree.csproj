@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>Nullable</WarningsAsErrors>
+    <PackageId>SyntaxChecked.FluentSimpleTree</PackageId>
+    <Version>1.0.12</Version>
+    <Authors>Carlos Eduardo Olivieri</Authors>
+    <Company>Syntax Checked Group</Company>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+</Project>
