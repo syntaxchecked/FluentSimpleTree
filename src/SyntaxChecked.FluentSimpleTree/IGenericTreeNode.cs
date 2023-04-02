@@ -159,7 +159,7 @@ namespace SyntaxChecked.FluentSimpleTree
     IGenericTreeNode<T> RemoveChild(string nodeId);
 
     /**
-    <summary>Remove the children nodes according to <paramref name="searchCriteria"/></summary>
+    <summary>Remove the children nodes according to <paramref name="searchCriteria"/>.</summary>
     <param name="searchCriteria">A custom search criteria based on a predicate according to the data type of the tree nodes.</param>
     <returns>An array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; that contains child nodes that were removed.</returns>
     */
@@ -167,13 +167,21 @@ namespace SyntaxChecked.FluentSimpleTree
 
     /**
     <summary>
-      Remove and returns an array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; containing all the children nodes removed from the current node instance.>
+      Remove and returns an array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; containing all the children nodes removed from the current node instance.
     </summary>
     */
     IGenericTreeNode<T>[] RemoveAllChildren();
 
     /**
-    <summary>Remove the descendants nodes according to <paramref name="searchCriteria"/></summary>
+    <summary>Remove the descendant node by <paramref name="nodeId"/> from the current instance node.</summary>
+    <param name="nodeId">An unique identifier.</param>
+    <returns>The IGenericTreeNode&lt;<typeparamref name="T"/>&gt; that was removed.</returns>
+    <exception>Thrown when the descendant node cannot be found by the given id.</exception>
+    */
+    IGenericTreeNode<T> RemoveDescendant(string nodeId);
+
+    /**
+    <summary>Remove the descendants nodes according to <paramref name="searchCriteria"/>.</summary>
     <param name="searchCriteria">A custom search criteria based on a predicate according to the data type of the tree nodes.</param>
     <returns>An array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; that contains descendant nodes that were removed.</returns>
     */
@@ -181,7 +189,7 @@ namespace SyntaxChecked.FluentSimpleTree
 
     /**
     <summary>
-      Remove and returns an array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; containing all the descendant nodes removed from the current node instance.>
+      Remove and returns an array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; containing all the descendant nodes removed from the current node instance.
     </summary>
     */
     IGenericTreeNode<T>[] RemoveAllDescendants();

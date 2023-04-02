@@ -50,7 +50,11 @@ namespace SyntaxChecked.FluentSimpleTree
       </code>
     </example>
     */
-    public bool HasNodeById(string nodeId) => _nodesWithIds.Any(item => item.Key == nodeId);
+    public bool HasNodeById(string nodeId)
+    {
+      TreeNode.ValidateNodeId(nodeId);
+      return _nodesWithIds.Any(item => item.Key == nodeId);
+    }
 
     /**
     <summary>Returns the node by <paramref name="nodeId"/> informed.</summary>
@@ -69,6 +73,7 @@ namespace SyntaxChecked.FluentSimpleTree
     {
       try
       {
+        TreeNode.ValidateNodeId(nodeId);
         return _nodesWithIds.First(item => item.Key == nodeId).Value;
       }
       catch
@@ -223,14 +228,18 @@ namespace SyntaxChecked.FluentSimpleTree
       }
 
       public bool HasPrecedingSibling()
-        => (_parent != null && _parent._children.IndexOf(this) > 0);
+        => _parent != null && _parent._children.IndexOf(this) > 0;
 
       public bool HasNextSibling()
-        => (_parent != null && _parent._children.IndexOf(this) < _parent._children.Count - 1);
+        => _parent != null && _parent._children.IndexOf(this) < _parent._children.Count - 1;
 
       public bool HasChild(uint index) => index >= 0 && index < _children.Count;
 
-      public bool HasChild(string nodeId) => _children.Any(item => item._id == nodeId);
+      public bool HasChild(string nodeId)
+      {
+        ValidateNodeId(nodeId);
+        return _children.Any(item => item._id == nodeId);
+      }
 
       public bool HasDescendant(string nodeId) => HasDescendant(nodeId, this);
 
@@ -246,6 +255,7 @@ namespace SyntaxChecked.FluentSimpleTree
       {
         try
         {
+          ValidateNodeId(nodeId);
           return _children.First(item => item.Id == nodeId);
         }
         catch
@@ -298,21 +308,39 @@ namespace SyntaxChecked.FluentSimpleTree
 
       public IGenericTreeNode<T>[] RemoveAllChildren() => RemoveChildren(_ => true);
 
+      public IGenericTreeNode<T> RemoveDescendant(string nodeId)
+      {
+        var descendantNode = (TreeNode)GetDescendant(nodeId);
+
+        descendantNode._parent?.RemoveChild(nodeId);
+
+        return descendantNode;
+      }
+
       public IGenericTreeNode<T>[] RemoveDescendants(Func<T, bool> searchCriteria)
       {
         var descendants = GetDescendants(searchCriteria);
 
-        var queryParentNodes = descendants
-                    .Select(node => new
-                    {
-                      parentNode = node.Parent
-                    })
-                    .Distinct()
-                    .ToList();
+        var removedNodes = new List<IGenericTreeNode<T>>();
 
-        queryParentNodes.ForEach(item => item.parentNode.RemoveChildren(searchCriteria));
+        while (descendants.Any())
+        {
+          var queryParentNodes = descendants
+                      .Select(node => new
+                      {
+                        parentNode = node.Parent
+                      })
+                      .Distinct()
+                      .ToList();
 
-        return descendants;
+          removedNodes.AddRange(queryParentNodes[0].parentNode.GetChildren(searchCriteria));
+
+          queryParentNodes[0].parentNode.RemoveChildren(searchCriteria);
+
+          descendants = GetDescendants(searchCriteria);
+        }
+
+        return removedNodes.ToArray();
       }
 
       public IGenericTreeNode<T>[] RemoveAllDescendants() => RemoveDescendants(_ => true);
@@ -356,25 +384,26 @@ namespace SyntaxChecked.FluentSimpleTree
         return nodesNotAppended.ToArray();
       }
 
-      //Private
-      private static void ValidateNodeId(string id)
+      public static void ValidateNodeId(string id)
       {
-        var regex = new Regex(@"^[a-zA-Z][a-zA-Z0-9._]*$");
+        _ = id ?? throw new ArgumentException("Argument nodeId cannot be null.");
+
+        var regex = new Regex(@"^[a-zA-Z0-9_][a-zA-Z0-9._-]*$");
 
         if (!regex.IsMatch(id))
-          throw new FormatException("Invalid identifier name.");
+          throw new FormatException("Invalid identifier.");
       }
 
+      //Private
       private IGenericTreeNode<T>[] CreateChildren((string id, T data)[] nodesData)
       {
         TreeNode tnode;
 
+        if (nodesData.Any() && _sourceTree.Height == _level) _sourceTree.Height++;
+
         nodesData.ToList().ForEach(item =>
         {
           tnode = new TreeNode(item.id, item.data, this, _sourceTree);
-
-          if (!_children.Any()) _sourceTree.Height++;
-
           _children.Add(tnode);
         });
 
@@ -383,10 +412,6 @@ namespace SyntaxChecked.FluentSimpleTree
 
       private bool HasDescendant(string nodeId, TreeNode startingNode)
       {
-        _ = nodeId ?? throw new ArgumentException("Argument nodeId cannot be null.");
-
-        ValidateNodeId(nodeId);
-
         try
         {
           GetDescendant(nodeId, startingNode);

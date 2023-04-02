@@ -138,6 +138,19 @@
 
       #region section code 5
       /*
+      var tree = new Tree<string>("a");
+
+      tree
+        .RootNode
+          .AddChildren(new[] { "b", "c", "d" })[0]
+            .AddChildren(new[] { "e", "f", "" })[0]
+            .Parent
+            .NextSibling
+          .AddChildren(new[] { "g" });
+
+      var x = 1;
+      */
+      /*
       var p1 = new Person("Lucas") { Age = 40 };
       var p2 = new Person("Mary") { Age = 25 };
       var p3 = new Person("Jason") { Age = 36 };
@@ -163,6 +176,74 @@
           .AddChildren(new Person[] { p7, p8, p9 })[1] //Jessica
             .AddChildren(new Person[] { p10, p11, p12 });
       */
+      #endregion
+
+      #region section code 6
+      /*
+      var myTree = new Tree<string>();
+      var root = myTree.RootNode;
+
+      root
+        .AddChildren(new[] { ("CEO", "John Smith") })[0] //CEO
+          .AddChildren(new[] { ("VP_Marketing", "Susan Jones"),
+                                ("VP_Sales", "Rachel Parker"),
+                                ("VP_Production", "Tom Allen") })[0] //VP Marketing
+            .AddChildren(new[] { ("Manager1", "Alice Johnson") })[0] //Manager1
+            .Parent //VP Marketing
+          .NextSibling //VP Sales
+            .AddChildren(new[] { ("Manager2", "Michael Gross") })[0] //Manager2
+            .Parent //VP Sales
+          .NextSibling //VP Production
+            .AddChildren(new[] { ("Manager3", "Kathy Roberts") }); //Manager3
+
+      var vpSales = root.RemoveDescendant("VP_Sales");
+      var Manager1 = root.RemoveDescendant("Manager1");
+
+      var x = 1;
+      */
+      #endregion
+
+      #region section code 7
+      /*
+      var myTree = new Tree<string>();
+      var root = myTree.RootNode;
+
+      root
+        .AddChildren(new[] { "Lucas" })[0] //Lucas
+          .AddChildren(new[] { "Mary", "Jason", "Peter" })[0] //Mary
+            .AddChildren(new[] { "Fred", "Jane" })[0] //Fred
+            .Parent //Mary
+          .NextSibling //Jason
+            .AddChildren(new[] { "Sean", "Jessica", "Hannah" })[1] //Jessica
+              .AddChildren(new[] { "Joseph", "John", "Jennifer" });
+
+      var removedNodes = root.RemoveDescendants(item => item == "Jane" || item.StartsWith("Je"));
+
+      var x = 1;
+      */
+      #endregion
+
+      #region section code 8
+
+      var tree1 = new Tree<string>("a");
+      var t1_root = tree1.RootNode;
+
+      t1_root
+        .AddChildren(new[] { "b", "c", "d" })[1] //c
+          .AddChildren(new[] { ("4", "e"), ("5", "f") })[0] //e
+            .AddChildren(new[] { "h", "i" });
+
+      var removedNodes = t1_root.RemoveDescendants(item => string.Compare(item, "d") > 0);
+
+      var tree2 = new Tree<string>("j");
+      var t2_root = tree2.RootNode;
+
+      t2_root
+        .AddChildren(new[] { "k", "l" });
+
+      var node_l = t2_root.GetDescendants(node => node == "l")[0];
+      node_l.AppendNodes(removedNodes);
+
       #endregion
     }
   }
