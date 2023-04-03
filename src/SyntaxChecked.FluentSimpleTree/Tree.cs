@@ -398,16 +398,18 @@ namespace SyntaxChecked.FluentSimpleTree
       private IGenericTreeNode<T>[] CreateChildren((string id, T data)[] nodesData)
       {
         TreeNode tnode;
+        var newNodes = new List<TreeNode>();
 
         if (nodesData.Any() && _sourceTree.Height == _level) _sourceTree.Height++;
 
         nodesData.ToList().ForEach(item =>
         {
           tnode = new TreeNode(item.id, item.data, this, _sourceTree);
+          newNodes.Add(tnode);
           _children.Add(tnode);
         });
 
-        return _children.ToArray();
+        return newNodes.ToArray();
       }
 
       private bool HasDescendant(string nodeId, TreeNode startingNode)
