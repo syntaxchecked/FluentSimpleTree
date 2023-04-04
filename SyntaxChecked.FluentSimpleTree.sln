@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96D32199-BA6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntaxChecked.FluentSimpleTree", "src\SyntaxChecked.FluentSimpleTree\SyntaxChecked.FluentSimpleTree.csproj", "{AEE57294-581B-40B4-A605-EB1FF5E5A995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntaxChecked.FluentSimpleTree.Consumer", "SyntaxChecked.FluentSimpleTree.Consumer\SyntaxChecked.FluentSimpleTree.Consumer.csproj", "{FD0F5FF2-5281-478B-B0A9-6479FC7B4950}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,10 +20,6 @@ Global
 		{AEE57294-581B-40B4-A605-EB1FF5E5A995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE57294-581B-40B4-A605-EB1FF5E5A995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE57294-581B-40B4-A605-EB1FF5E5A995}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD0F5FF2-5281-478B-B0A9-6479FC7B4950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD0F5FF2-5281-478B-B0A9-6479FC7B4950}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD0F5FF2-5281-478B-B0A9-6479FC7B4950}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD0F5FF2-5281-478B-B0A9-6479FC7B4950}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AEE57294-581B-40B4-A605-EB1FF5E5A995} = {96D32199-BA65-433D-8B3E-26C43EE3CF71}
