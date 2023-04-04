@@ -1,13 +1,9 @@
 # FluentSimpleTree
 A library to handle n-ary trees in a simple and fluent way for .NET
 
-<br>
-
 ## Links
 
 * [Documentation](https://github.com/syntaxchecked/FluentSimpleTree.Examples#readme)
-
-<br>
 
 ## Legal Notice
 
