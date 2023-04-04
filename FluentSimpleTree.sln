@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96D32199-BA65-433D-8B3E-26C43EE3CF71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntaxChecked.FluentSimpleTree", "src\SyntaxChecked.FluentSimpleTree\SyntaxChecked.FluentSimpleTree.csproj", "{AEE57294-581B-40B4-A605-EB1FF5E5A995}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSimpleTree", "src\FluentSimpleTree\FluentSimpleTree.csproj", "{AEE57294-581B-40B4-A605-EB1FF5E5A995}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
