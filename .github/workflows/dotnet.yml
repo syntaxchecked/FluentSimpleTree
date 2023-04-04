@@ -45,5 +45,5 @@ jobs:
       with:
         name: my-artifact
         path: D:\a\FluentSimpleTree\FluentSimpleTree\*nupkg
-    # - name: Push
-    #  run: dotnet nuget push SyntaxChecked.TestPackage.1.0.7.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_KEY }}
+    - name: Push
+      run: dotnet nuget push FluentSimpleTree.1.0.1.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_KEY }}
