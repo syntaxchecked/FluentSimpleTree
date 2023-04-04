@@ -5,7 +5,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
-    <PackageId>SyntaxChecked.FluentSimpleTree</PackageId>
+    <PackageId>FluentSimpleTree</PackageId>
     <Version>1.0.1</Version>
     <Authors>Carlos Eduardo Olivieri</Authors>
     <Company>Syntax Checked Group</Company>
