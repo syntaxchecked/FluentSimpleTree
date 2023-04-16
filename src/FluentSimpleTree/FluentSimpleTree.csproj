@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
     <PackageId>FluentSimpleTree</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Carlos Eduardo Olivieri</Authors>
     <Company>Syntax Checked Group</Company>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
