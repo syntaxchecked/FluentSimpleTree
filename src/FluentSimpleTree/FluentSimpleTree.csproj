@@ -1,17 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
     <PackageId>FluentSimpleTree</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Carlos Eduardo Olivieri</Authors>
     <Company>Syntax Checked Group</Company>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Copyright>Copyright © Syntax Checked Group</Copyright>
+    <Copyright>Copyright © SyntaxChecked Group</Copyright>
     <Title>FluentSimpleTree</Title>
     <PackageTags>Tree;DataStructure</PackageTags>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -20,32 +19,25 @@
     <Summary>This library helps creating and manipulating n-ary trees in a simple and fluent way.</Summary>
     <Description>This library helps creating and manipulating n-ary trees in a simple and fluent way.</Description>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
-
-   <PropertyGroup>
+  <PropertyGroup>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath=""/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
-
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath=""/>
+    <None Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="False" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
-
 </Project>

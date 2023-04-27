@@ -1,0 +1,5 @@
+1.0.3
+  Added
+    - IGenericTreeNode<T>.Remove() to allow removal of the node itself from the tree, à la JavaScript with DOM.
+    - IGenericTreeNode<T>.InsertChildren(ushort position, T[] nodesData) to allow insertion of nodes at any
+    position in the list of child nodes of the node.

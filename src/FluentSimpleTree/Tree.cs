@@ -5,10 +5,8 @@ using System.Text.RegularExpressions;
 
 namespace SyntaxChecked.FluentSimpleTree
 {
-  /**
-  <summary>A generic n-ary tree class.</summary>
-  <typeparam name="T">The type stored by the tree nodes.</typeparam>
-  */
+  /// <summary>A generic n-ary tree class.</summary>
+  /// <typeparam name="T">The type stored by the tree nodes.</typeparam>
   public class Tree<T>
   {
     #region Data Members
@@ -23,52 +21,46 @@ namespace SyntaxChecked.FluentSimpleTree
     #endregion //Data Members
 
     #region Methods
-    /**
-    <summary>
-      Initializes the new tree with one root node containing the value passed to
-      <paramref name="rootNodeData"/> and whose Id is "root".
-    </summary>
-    <param name="rootNodeData">The data stored in the node.</param>
-    */
+    /// <summary>
+    /// Initializes the new tree with one root node containing the value passed to
+    /// <paramref name="rootNodeData"/> and whose Id is "root".
+    /// </summary>
+    /// <param name="rootNodeData">The data stored in the node.</param>
     public Tree(T rootNodeData) => RootNode = new TreeNode("root", rootNodeData, null, this);
 
     /// <summary>Initializes the new tree with one root node whose Id is "root".</summary>
     public Tree() => RootNode = new TreeNode("root", null, this);
 
-    /**
-    <summary>
-      Determines whether the tree contains one node with <paramref name="nodeId"/> informed.
-    </summary>
-    <param name="nodeId">The node unique identifier.</param>
-    <returns>true if the tree contains one node with the given id; otherwise, false.</returns>
-    <example>
-      Example:
-      <code>
-        var myTree = new Tree&lt;int&gt;(1);
-        if (myTree.HasNode("root")) //always returns true in this case
-            System.Console.WriteLine("True");
-      </code>
-    </example>
-    */
+    /// <summary>
+    /// Determines whether the tree contains one node with <paramref name="nodeId"/> informed.
+    /// </summary>
+    /// <param name="nodeId">The node unique identifier.</param>
+    /// <returns>true if the tree contains one node with the given id; otherwise, false.</returns>
+    /// <example>
+    ///  Example:
+    ///  <code>
+    ///    var myTree = new Tree&lt;int&gt;(1);
+    ///    if (myTree.HasNode("root")) //always returns true in this case
+    ///        System.Console.WriteLine("True");
+    ///  </code>
+    /// </example>
     public bool HasNodeById(string nodeId)
     {
       TreeNode.ValidateNodeId(nodeId);
       return _nodesWithIds.Any(item => item.Key == nodeId);
     }
 
-    /**
-    <summary>Returns the node by <paramref name="nodeId"/> informed.</summary>
-    <param name="nodeId">The node unique identifier.</param>
-    <exception>Thrown when the node cannot be found by the given id.</exception>
-    <example>
-      Example:
-      <code>
-        var myTree = new Tree&lt;int&gt;(1);
-        var root = myTree.GetNode("root");
-        System.Console.WriteLine(root.Data);
-      </code>
-    </example>
-    */
+    /// <summary>Returns the node by <paramref name="nodeId"/> informed.</summary>
+    /// <param name="nodeId">The node unique identifier.</param>
+    /// <exception>Thrown when the node cannot be found by the given id.</exception>
+    /// <example>
+    ///  Example:
+    ///  <code>
+    ///    var myTree = new Tree&lt;int&gt;(1);
+    ///    var root = myTree.GetNode("root");
+    ///    System.Console.WriteLine(root.Data);
+    ///  </code>
+    /// </example>
     public IGenericTreeNode<T> GetNodeById(string nodeId)
     {
       try
@@ -82,26 +74,20 @@ namespace SyntaxChecked.FluentSimpleTree
       }
     }
 
-    /**
-    <summary>Returns an array of nodes according to <paramref name="searchCriteria"/> informed.</summary>
-    <remarks>if no node is found by the search criteria, returns an empty array.</remarks>
-    <param name="searchCriteria">A custom search criteria to find nodes based on a predicate according to data stored in the tree nodes.</param>
-    <example>
-      Example:
-      <code>
-        var person1 = new Person("Carlos");
-        var person2 = new Person("Bruna");
-
-        var tree = new Tree&lt;Person&gt;();
-
-        tree.RootNode.AddChildren(new[] { person1, person2 });
-
-        var nodes = tree.GetNodes(person => person.Name == "Carlos");
-
-        System.Console.WriteLine($"{nodes.Length}"); //Output: 1
-      </code>
-    </example>
-    */
+    /// <summary>Returns an array of nodes according to <paramref name="searchCriteria"/> informed.</summary>
+    /// <remarks>if no node is found by the search criteria, returns an empty array.</remarks>
+    /// <param name="searchCriteria">A custom search criteria to find nodes based on a predicate according to data stored in the tree nodes.</param>
+    /// <example>
+    ///  Example:
+    ///  <code>
+    ///    var person1 = new Person("Carlos");
+    ///    var person2 = new Person("Bruna");
+    ///    var tree = new Tree&lt;Person&gt;();
+    ///    tree.RootNode.AddChildren(new[] { person1, person2 });
+    ///    var nodes = tree.GetNodes(person => person.Name == "Carlos");
+    ///    System.Console.WriteLine($"{nodes.Length}"); //Output: 1
+    ///  </code>
+    /// </example>
     public IGenericTreeNode<T>[] GetNodes(Func<T, bool> searchCriteria)
     {
       var nodes = new List<IGenericTreeNode<T>>();
@@ -114,11 +100,7 @@ namespace SyntaxChecked.FluentSimpleTree
       return nodes.ToArray();
     }
 
-    /**
-    <summary>
-      Returns an array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; containing all the tree nodes.
-    </summary>
-    */
+    /// <summary>Returns an array of IGenericTreeNode&lt;<typeparamref name="T"/>&gt; containing all the tree nodes.</summary>
     public IGenericTreeNode<T>[] GetAllNodes() => GetNodes(_ => true);
 
     #endregion //Methods
@@ -188,11 +170,21 @@ namespace SyntaxChecked.FluentSimpleTree
 
       public bool IsRootNode => _parent == null;
 
+      public ushort Index
+      {
+        get
+        {
+          if (IsRootNode) return 0;
+
+          return (ushort)_parent!._children.IndexOf(this);
+        }
+      }
+
       #endregion //Data Members
 
       #region Methods
 
-      //Public
+      //Publics
       public TreeNode(string? id, TreeNode? parent, Tree<T> sourceTree) : this(id, default!, parent!, sourceTree) { }
 
       public TreeNode(string? id, T data, TreeNode? parent, Tree<T> sourceTree)
@@ -217,21 +209,40 @@ namespace SyntaxChecked.FluentSimpleTree
                           : (_parent._level + 1));
       }
 
-      public IGenericTreeNode<T>[] AddChildren((string nodeId, T data)[] nodesData) => CreateChildren(nodesData);
+      public IGenericTreeNode<T>[] AddChildren((string nodeId, T data)[] nodesData)
+      {
+        var createdNodes = CreateChildren(nodesData);
+
+        _children.AddRange((IEnumerable<TreeNode>)createdNodes);
+
+        return createdNodes;
+      }
 
       public IGenericTreeNode<T>[] AddChildren(T[] data)
       {
-        var nodesData = new (string id, T data)[data.Length];
-        int index = 0;
-        data.ToList().ForEach(item => nodesData[index++].data = item);
-        return CreateChildren(nodesData);
+        var nodesData = data.SelectMany(item => new (string nodeId, T data)[] { (default!, item) });
+
+        return AddChildren(nodesData.ToArray());
       }
 
-      public bool HasPrecedingSibling()
-        => _parent != null && _parent._children.IndexOf(this) > 0;
+      public IGenericTreeNode<T>[] InsertChildren(ushort position, (string nodeId, T data)[] nodesData)
+      {
+        var createdNodes = CreateChildren(nodesData);
 
-      public bool HasNextSibling()
-        => _parent != null && _parent._children.IndexOf(this) < _parent._children.Count - 1;
+        if (position > _children.Count)
+          AddChildren(nodesData);
+        else
+          _children.InsertRange(position, (IEnumerable<TreeNode>)createdNodes);
+
+        return createdNodes;
+      }
+
+      public IGenericTreeNode<T>[] InsertChildren(ushort position, T[] data)
+      {
+        var nodesData = data.SelectMany(item => new (string nodeId, T data)[] { (default!, item) });
+
+        return InsertChildren(position, nodesData.ToArray());
+      }
 
       public bool HasChild(uint index) => index >= 0 && index < _children.Count;
 
@@ -242,6 +253,12 @@ namespace SyntaxChecked.FluentSimpleTree
       }
 
       public bool HasDescendant(string nodeId) => HasDescendant(nodeId, this);
+
+      public bool HasPrecedingSibling()
+        => _parent != null && _parent._children.IndexOf(this) > 0;
+
+      public bool HasNextSibling()
+        => _parent != null && _parent._children.IndexOf(this) < _parent._children.Count - 1;
 
       public IGenericTreeNode<T> GetChild(uint index)
       {
@@ -282,6 +299,13 @@ namespace SyntaxChecked.FluentSimpleTree
       }
 
       public IGenericTreeNode<T>[] GetAllDescendants() => GetDescendants(_ => true);
+
+      public IGenericTreeNode<T> Remove()
+      {
+        _ = _parent ?? throw new Exception($"Root node can not be removed.");
+
+        return _parent.RemoveChild(_parent._children.IndexOf(this), null);
+      }
 
       public IGenericTreeNode<T> RemoveChild(uint index) => RemoveChild((int)index, null);
 
@@ -394,7 +418,8 @@ namespace SyntaxChecked.FluentSimpleTree
           throw new FormatException("Invalid identifier.");
       }
 
-      //Private
+      //Privates
+
       private IGenericTreeNode<T>[] CreateChildren((string id, T data)[] nodesData)
       {
         TreeNode tnode;
@@ -406,7 +431,6 @@ namespace SyntaxChecked.FluentSimpleTree
         {
           tnode = new TreeNode(item.id, item.data, this, _sourceTree);
           newNodes.Add(tnode);
-          _children.Add(tnode);
         });
 
         return newNodes.ToArray();
